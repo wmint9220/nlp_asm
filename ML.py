@@ -1,5 +1,13 @@
 import streamlit as st
 import tensorflow as tf
+import urllib.request
+
+# Download the model from GitHub (replace URL with your model's raw file URL)
+url = "https://raw.githubusercontent.com/wmint9220/nlp_asm/main/model.keras"
+urllib.request.urlretrieve(url, "model.keras")
+
+# Now load the model
+model = tf.keras.models.load_model('model.keras')
 
 # Load the model
 model = tf.keras.models.load_model('model.keras')
