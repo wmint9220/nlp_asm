@@ -1,31 +1,21 @@
 import streamlit as st
-import joblib
-import numpy as np
+import tensorflow as tf
 
-# Load the trained model and vectorizer
-model = joblib.load('model.keras')
-vectorizer = joblib.load('tfidf_vectorizer.pkl')
+# Load the model
+model = tf.keras.models.load_model('model.keras')
 
-# Define a function to predict the sentiment
+# Create a function for making predictions
 def predict_sentiment(text):
-    # Vectorize the input text
-    text_vectorized = vectorizer.transform([text])
-    # Predict the sentiment (0: negative, 1: positive)
-    sentiment = model.predict(text_vectorized)[0]
-    return "Positive" if sentiment == 1 else "Negative"
+    # Assuming you have preprocessing steps here before passing it to the model
+    processed_text = preprocess(text)  # Replace with your preprocessing function
+    prediction = model.predict(processed_text)
+    return prediction
 
 # Streamlit UI
 st.title('Financial Sentiment Analysis')
 
-st.write("""
-    This app predicts the sentiment of a given financial sentence or news.
-    It can classify the sentiment as either Positive or Negative based on financial content.
-""")
-
-# User input
-user_input = st.text_area("Enter a financial sentence or report:")
+user_input = st.text_area("Enter a financial sentence:")
 
 if user_input:
-    # Run the sentiment prediction when the user provides input
     sentiment = predict_sentiment(user_input)
     st.write(f"Sentiment: {sentiment}")
