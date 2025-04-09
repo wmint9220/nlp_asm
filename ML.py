@@ -11,20 +11,7 @@ urllib.request.urlretrieve(url, "model.keras")
 # Now load the model
 model = tf.keras.models.load_model('model.keras')
 
-# Example of preprocessing function (adjust according to your model's requirements)
-def preprocess(text):
-    # Assuming the model expects a TF-IDF vectorized representation of the text
-    vectorizer = TfidfVectorizer(stop_words='english')
-    processed_text = vectorizer.fit_transform([text])
-    return processed_text.toarray()  # Convert sparse matrix to dense array
 
-# Create a function for making predictions
-def predict_sentiment(text):
-    # Preprocess the input text before passing it to the model
-    processed_text = preprocess(text)
-    prediction = model.predict(processed_text)  # Get prediction from model
-    sentiment = np.argmax(prediction, axis=1)  # Assuming classification model (e.g., 0 = negative, 1 = positive)
-    return sentiment
 
 # Streamlit UI
 st.title('Financial Sentiment Analysis')
